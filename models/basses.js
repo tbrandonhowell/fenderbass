@@ -12,6 +12,21 @@ bassModels = { // creating a new object containing more specific functions for t
             cb(res);
         });
     },
+    japan: function(cb) {
+        orm.allWhere("basses", "gen_country", "Japan", function(res){
+            cb(res);
+        });
+    },
+    usa: function(cb) {
+        orm.allWhere("basses", "gen_country", "USA", function(res){
+            cb(res);
+        });
+    },
+    precision: function(cb) {
+        orm.allWhere("basses", "gen_type", "Precision", function(res){
+            cb(res);
+        });
+    },
     // allWhereFresh: function(cb) { // create a more specific 'allWhere' function to get the uneaten burgers
     //     orm.allWhere("burgers", "devoured", false, function(res){ // use the 'allWhere' query template from the ORM
     //         cb(res);

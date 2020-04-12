@@ -6,7 +6,7 @@ const bassesModel = require("../models/basses.js"); // Import the model (burgers
 // ==================================================
 
 
-// TODO: GET ROUTE
+// / GET ROUTE
 // ==================================================
 router.get("/", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
     console.log("GET request received");
@@ -17,6 +17,73 @@ router.get("/", function(req,res) { // adding this get() method to our router ob
         console.log(hbsObject);
         res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
     });
+});
+// ==================================================
+
+// /japan GET ROUTE
+// ==================================================
+router.get("/japan", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+    console.log("GET request received");
+    bassesModel.japan(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+        const hbsObject = { // create an object that will be fed into our handlebars res.render below
+            basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+        };
+        console.log(hbsObject);
+        res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
+    });
+});
+// ==================================================
+
+// /usa GET ROUTE
+// ==================================================
+router.get("/usa", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+    console.log("GET request received");
+    bassesModel.usa(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+        const hbsObject = { // create an object that will be fed into our handlebars res.render below
+            basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+        };
+        console.log(hbsObject);
+        res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
+    });
+});
+// ==================================================
+
+// /precision GET ROUTE
+// ==================================================
+router.get("/precision", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+    console.log("GET request received");
+    bassesModel.precision(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+        const hbsObject = { // create an object that will be fed into our handlebars res.render below
+            basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+        };
+        console.log(hbsObject);
+        res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
+    });
+});
+// ==================================================
+
+// /api GET ROUTE
+// ==================================================
+router.get("/api/:route", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+    console.log("API GET request received");
+    console.log("Route: " + req.params.route);
+    // TODO: how do we set this up?
+    // bassesModel.precision(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+    //     const hbsObject = { // create an object that will be fed into our handlebars res.render below
+    //         basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+    //     };
+    //     console.log(hbsObject);
+    //     res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
+    // });
+    bassesModel.usa(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+        const hbsObject = { // create an object that will be fed into our handlebars res.render below
+            basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+        };
+        console.log(hbsObject);
+        // res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
+        res.json(hbsObject);
+    });
+    // return res.status(200).end(); // return a 200 server status if everything went okay.
 });
 // ==================================================
 

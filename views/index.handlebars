@@ -1,13 +1,40 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            this is the new column
-            <table>
+            Static Nav: <a href="/">Home</a> | <a href="/japan">Japan Basses</a> | <a href="/usa">USA Basses</a> | <a href="/precision">Precision Basses</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table border="1">
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Type</th>
+                    <th>Made In</th>
+                    <th>Markets</th>
+                    <th>Hardware Color</th>
+                </tr>
                 {{#each basses}}
-                    <tr><td>{{gen_brand}}</td><td>{{gen_model}}</td><td>{{gen_series}}</td></tr>
+                    <tr>
+                        <td>{{gen_brand}}</td>
+                        <td>{{gen_model}}</td>
+                        <td>{{gen_type}}</td>
+                        <td>{{gen_country}}</td>
+                        <td>{{gen_market}}</td>
+                        <td>{{gen_hardware}}</td>
+                    </tr>
                 {{/each}}
             </table>
-            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            Dynamic Load: 
+            <button class="dynamic" id="all">All Basses</button> 
+            <button class="dynamic" id="japan">Japan Basses</button> 
+            <button class="dynamic" id="usa">USA Basses</button> 
+            <button class="dynamic" id="precision">Precision Basses</button>
         </div>
     </div>
 </div>
@@ -76,6 +103,28 @@
 
 
 <script>
+
+    $(".dynamic").on("click", function(event){ // capture the click on any of the devour buttons
+        console.log("caught the click");
+        const updateID = $(this).attr("id"); // grab the ID for use in the sql query
+        console.log("updateID = " + updateID);
+        // we're actually skipping this step, since all we need to do it send the ID over in the post (and we're doing that via the URL)
+        // const devourData = { // create an object of fields that will be fed into our ajax PUT request
+        //    devoured: true // in this case we're just sending over the 'devoured' flag in the body
+        // };
+
+        
+
+        {{!-- $.ajax("/" + updateID, { // do an ajax call
+            type: "PUT", // use the PUT method
+            // data: devourData // would normally send this if we needed to send anything more than the ID for record. But we're handling that via the PUT URL
+        }).then( () => {
+            // TODO: don't we need some sort of error checking here?
+            console.log("changed devoured status to true"); // this is kind of an assumption
+            location.reload(); // reload the page
+        }); --}}
+    });
+
 
     $(".devour").on("click", function(event){ // capture the click on any of the devour buttons
         const updateID = $(this).attr("id"); // grab the ID for use in the sql query
