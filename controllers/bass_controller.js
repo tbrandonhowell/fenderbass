@@ -62,11 +62,24 @@ router.get("/precision", function(req,res) { // adding this get() method to our 
 });
 // ==================================================
 
-// /api GET ROUTE
+// /api GET ROUTEs
 // ==================================================
+
+router.get("/api/all", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+    console.log("API GET ALL request received");
+    var column = req.params.column;
+    var match = req.params.match;
+    bassesModel.all(function(data) {
+        const hbsObject = { // create an object that will be fed into our handlebars res.render below
+            basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+        };
+        console.log(hbsObject);
+        res.json(hbsObject);
+    });
+});
+
 router.get("/api/:column/:match", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
-    console.log("API GET request received");
-    console.log("Route: " + req.params.route);
+    console.log("API GET COLUMN + MATCH request received");
     var column = req.params.column;
     var match = req.params.match;
     bassesModel.api(column,match,function(data) {
@@ -77,6 +90,7 @@ router.get("/api/:column/:match", function(req,res) { // adding this get() metho
         res.json(hbsObject);
     });
 });
+
 // ==================================================
 
 

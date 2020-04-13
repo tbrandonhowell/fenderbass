@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-md-12">
             Dynamic Load: 
-            <button class="dynamic" column="gen_brand" match="*">All Basses</button> 
+            <button class="dynamic" column="all" match="all">All Basses</button> 
             <button class="dynamic" column="gen_country" match="Japan">Japan Basses</button> 
             <button class="dynamic" column="gen_country" match="USA">USA Basses</button> 
             <button class="dynamic" column="gen_type" match="Precision">Precision Basses</button>
@@ -114,6 +114,11 @@
         // const devourData = { // create an object of fields that will be fed into our ajax PUT request
         //    devoured: true // in this case we're just sending over the 'devoured' flag in the body
         // };
+        if ( searchColumn == "all" && searchMatch == "all" ) {
+            const requestURL = "/api/all"; // TODO: should probably kill this in production
+        } else {
+            const requestURL = "/api/" + searchColumn + "/" + searchMatch;
+        }
         const requestURL = "/api/" + searchColumn + "/" + searchMatch;
         console.log("requestURL = " + requestURL);
         //$("#bassTable").empty();
