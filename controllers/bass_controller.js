@@ -1,4 +1,4 @@
-// TODO: REQUIRE
+// REQUIRE
 // ==================================================
 const express = require("express"); // pull in express again within the controller so that we can use the Router() method
 const router = express.Router(); // utilize the Router() express method to create our routes. the "router" constant in this case is an object.
@@ -64,26 +64,18 @@ router.get("/precision", function(req,res) { // adding this get() method to our 
 
 // /api GET ROUTE
 // ==================================================
-router.get("/api/:route", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+router.get("/api/:column/:match", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
     console.log("API GET request received");
     console.log("Route: " + req.params.route);
-    // TODO: how do we set this up?
-    // bassesModel.precision(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
-    //     const hbsObject = { // create an object that will be fed into our handlebars res.render below
-    //         basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
-    //     };
-    //     console.log(hbsObject);
-    //     res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
-    // });
-    bassesModel.usa(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+    var column = req.params.column;
+    var match = req.params.match;
+    bassesModel.api(column,match,function(data) {
         const hbsObject = { // create an object that will be fed into our handlebars res.render below
             basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
         };
         console.log(hbsObject);
-        // res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
         res.json(hbsObject);
     });
-    // return res.status(200).end(); // return a 200 server status if everything went okay.
 });
 // ==================================================
 
