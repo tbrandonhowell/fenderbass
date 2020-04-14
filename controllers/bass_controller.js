@@ -73,7 +73,7 @@ router.get("/api/all", function(req,res) { // adding this get() method to our ro
         const hbsObject = { // create an object that will be fed into our handlebars res.render below
             basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
         };
-        console.log(hbsObject);
+        // console.log(hbsObject);
         res.json(hbsObject);
     });
 });
@@ -86,7 +86,7 @@ router.get("/api/:column/:match", function(req,res) { // adding this get() metho
         const hbsObject = { // create an object that will be fed into our handlebars res.render below
             basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
         };
-        console.log(hbsObject);
+        // console.log(hbsObject);
         res.json(hbsObject);
     });
 });

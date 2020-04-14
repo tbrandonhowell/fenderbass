@@ -114,12 +114,13 @@
         // const devourData = { // create an object of fields that will be fed into our ajax PUT request
         //    devoured: true // in this case we're just sending over the 'devoured' flag in the body
         // };
-        if ( searchColumn == "all" && searchMatch == "all" ) {
-            const requestURL = "/api/all"; // TODO: should probably kill this in production
+        if ( searchColumn === "all" && searchMatch === "all" ) {
+            console.log("request is for the ALL API");
+            var requestURL = "/api/all"; // TODO: should probably kill this in production
         } else {
-            const requestURL = "/api/" + searchColumn + "/" + searchMatch;
+            console.log("request is for search/match API");
+            var requestURL = "/api/" + searchColumn + "/" + searchMatch;
         }
-        const requestURL = "/api/" + searchColumn + "/" + searchMatch;
         console.log("requestURL = " + requestURL);
         //$("#bassTable").empty();
         //$("#bassTable").html("<tr><th>Brand</th><th>Model</th><th>Type</th><th>Made In</th><th>Markets</th><th>Hardware Color</th></tr>");
@@ -128,7 +129,7 @@
             console.log("ajax result:");
             console.log(response);
             var tableBasses = response.basses;
-            console.log(tableBasses);
+            // console.log(tableBasses);
             var newTableGuts = "<tr><th>Brand</th><th>Model</th><th>Type</th><th>Made In</th><th>Markets</th><th>Hardware Color</th></tr>";
             tableBasses.forEach(element => {
                 var brand = element.gen_brand;
