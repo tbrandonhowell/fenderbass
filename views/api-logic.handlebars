@@ -1,0 +1,50 @@
+{{!-- THIS IS JUST FOR TESTING TO PLAY WITH API PARSING LOGIC --}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            Static Nav: <a href="/">Home</a> | <a href="/japan">Japan Basses</a> | <a href="/usa">USA Basses</a> | <a href="/precision">Precision Basses</a>
+        </div>
+        <div class="col-md-12">
+            <h1>api parse testing</h1>
+            <h2>see console</h2>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    console.log('page loaded');
+    // ====== getting the data for the sql query from the URL ====== //
+    console.log(window.location.href);
+    var queryString = window.location.href.split("?")[1]; // extract the querystring
+    console.log('queryString = ' + queryString);
+    var queryArray = queryString.split("&"); // create array from the query+value
+    console.log('queryArray = ');
+    console.log(queryArray);
+    var queryArrayV2 = []; // create new array to become the nested array of query+value
+    for (x=0; x<queryArray.length; x++) { // loop through the queryArray
+        var arrayEntry = queryArray[x].split("="); // explode to nested array on the "=" character
+        if (arrayEntry[1].indexOf("|") > 0) { // if there's a pipe, that means it should be an OR query
+            console.log("there's a pipe!!");
+            var explodedOnPipes = arrayEntry[1].split("|");
+            explodedOnPipes = explodedOnPipes.join(" OR "); // replace the pipe with " OR " (or whatever it needs to be)
+            arrayEntry[1] = explodedOnPipes; 
+        }
+        queryArrayV2.push(arrayEntry); // push this specific query into the queryArrayV2[] array
+    }
+    console.log('queryArrayV2 = ');
+    console.log(queryArrayV2);
+    // build the full query from the queryArrayV2
+    // ^^ actually I've probably made this more complicated than it needs to be.
+    // could probably just do a find/replace of all "&" with a sql AND, 
+    // and replace all pipes with a sql OR
+    // TODO: need to think about this more
+
+</script>
+
+
+
+
+

@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            Static Nav: <a href="/">Home</a> | <a href="/japan">Japan Basses</a> | <a href="/usa">USA Basses</a> | <a href="/precision">Precision Basses</a>
+        </div>
+        <div class="col-md-12">
+            <h1>Bass Finder</h1>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(".dynamic").on("click", function(event){ // capture the click on any of the devour buttons
+        console.log("caught the click");
+        const searchColumn = $(this).attr("column"); // grab the ID for use in the sql query
+        const searchMatch = $(this).attr("match");
+        console.log("searchColumn = " + searchColumn);
+        console.log("searchMatch = " + searchMatch);
+        // we're actually skipping this step, since all we need to do it send the ID over in the post (and we're doing that via the URL)
+        // const devourData = { // create an object of fields that will be fed into our ajax PUT request
+        //    devoured: true // in this case we're just sending over the 'devoured' flag in the body
+        // };
+        if ( searchColumn === "all" && searchMatch === "all" ) {
+            console.log("request is for the ALL API");
+            var requestURL = "/api/all"; // TODO: should probably kill this in production
+        } else {
+            console.log("request is for search/match API");
+            var requestURL = "/api/" + searchColumn + "/" + searchMatch;
+        }
+        console.log("requestURL = " + requestURL);
+        //$("#bassTable").empty();
+        //$("#bassTable").html("<tr><th>Brand</th><th>Model</th><th>Type</th><th>Made In</th><th>Markets</th><th>Hardware Color</th></tr>");
+        $.get(requestURL).then(function(response) {
+            console.log("ajax request triggered");
+            console.log("ajax result:");
+            console.log(response);
+            var tableBasses = response.basses;
+            // console.log(tableBasses);
+            var newTableGuts = "<tr><th>Brand</th><th>Model</th><th>Type</th><th>Made In</th><th>Markets</th><th>Hardware Color</th></tr>";
+            tableBasses.forEach(element => {
+                var brand = element.gen_brand;
+                var model = element.gen_model;
+                var type = element.gen_type;
+                var madeIn = element.gen_country;
+                var markets = element.gen_market;
+                var hardwareColor = element.gen_hardware;
+                var newTableRow = "<tr><td>"+brand+"</td><td>"+model+"</td><td>"+type+"</td><td>"+madeIn+"</td><td>"+markets+"</td><td>"+hardwareColor+"</td></tr>";
+                newTableGuts = newTableGuts + newTableRow;
+            })
+            $("#bassTable").html(newTableGuts);
+            // newTable = newTable + "</table>";
+
+        });
+    });
+
+
+    $(".devour").on("click", function(event){ // capture the click on any of the devour buttons
+        const updateID = $(this).attr("id"); // grab the ID for use in the sql query
+        console.log("updateID = " + updateID);
+        // we're actually skipping this step, since all we need to do it send the ID over in the post (and we're doing that via the URL)
+        // const devourData = { // create an object of fields that will be fed into our ajax PUT request
+        //    devoured: true // in this case we're just sending over the 'devoured' flag in the body
+        // };
+        $.ajax("/" + updateID, { // do an ajax call
+            type: "PUT", // use the PUT method
+            // data: devourData // would normally send this if we needed to send anything more than the ID for record. But we're handling that via the PUT URL
+        }).then( () => {
+            // TODO: don't we need some sort of error checking here?
+            console.log("changed devoured status to true"); // this is kind of an assumption
+            location.reload(); // reload the page
+        });
+    });
+
+    $("#newBurgerButton").on("click", function(event){
+        const newBurger = $("#newBurger").val().trim();
+        console.log("newBurger = ", newBurger);
+        const newBurgerData = {
+            burger_name: newBurger
+        };
+        $.ajax("/", {
+            type: "POST",
+            data: newBurgerData,
+        }).then( () => {
+            console.log("created a new burger");
+            location.reload();
+        })
+    });
+
+</script>
+
+
+
+
+

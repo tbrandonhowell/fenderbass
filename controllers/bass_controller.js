@@ -62,6 +62,36 @@ router.get("/precision", function(req,res) { // adding this get() method to our 
 });
 // ==================================================
 
+// /finder GET ROUTE
+// ==================================================
+router.get("/finder", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+    console.log("/finder GET request received");
+    // bassesModel.precision(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+    //     const hbsObject = { // create an object that will be fed into our handlebars res.render below
+    //         basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+    //     };
+    //     console.log(hbsObject);
+    //     res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
+    // });
+    res.render("finder");
+});
+// ==================================================
+
+// /api-logic GET ROUTE
+// ==================================================
+router.get("/api-logic", function(req,res) { // adding this get() method to our router object. looking for a GET to the root so we can display the page/app
+    console.log("/api-logic GET request received");
+    // bassesModel.precision(function(data) { // use the 'all' query from the burgers model, feed it the only argument needed (a callback function)
+    //     const hbsObject = { // create an object that will be fed into our handlebars res.render below
+    //         basses: data // make the data object that comes back from the mysql query the value for the "burgers" key in this object that we'll loop through with handlebars
+    //     };
+    //     console.log(hbsObject);
+    //     res.render("index", hbsObject); // for this route, render the index template, and feed the hbsObject data into the templates via handlebars.
+    // });
+    res.render("api-logic");
+});
+// ==================================================
+
 // /api GET ROUTEs
 // ==================================================
 
