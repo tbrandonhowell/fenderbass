@@ -26,21 +26,40 @@
     var queryArrayV2 = []; // create new array to become the nested array of query+value
     for (x=0; x<queryArray.length; x++) { // loop through the queryArray
         var arrayEntry = queryArray[x].split("="); // explode to nested array on the "=" character
-        if (arrayEntry[1].indexOf("|") > 0) { // if there's a pipe, that means it should be an OR query
-            console.log("there's a pipe!!");
-            var explodedOnPipes = arrayEntry[1].split("|");
-            explodedOnPipes = explodedOnPipes.join(" OR "); // replace the pipe with " OR " (or whatever it needs to be)
-            arrayEntry[1] = explodedOnPipes; 
-        }
+        // if (arrayEntry[1].indexOf("|") > 0) { // if there's a pipe, that means it should be an OR query
+        //     console.log("there's a pipe!!");
+        //     var explodedOnPipes = arrayEntry[1].split("|");
+        //    explodedOnPipes = explodedOnPipes.join(" OR "); // replace the pipe with " OR " (or whatever it needs to be)
+        //    arrayEntry[1] = explodedOnPipes; 
+        // }
         queryArrayV2.push(arrayEntry); // push this specific query into the queryArrayV2[] array
     }
     console.log('queryArrayV2 = ');
     console.log(queryArrayV2);
     // build the full query from the queryArrayV2
+    var sqlQuery = "WHERE "; // start it out
+    var sky = "gray"
+    for (x=0; x<queryArrayV2.length; x++) { // loop through the array
+        if (queryArrayV2[x][1].indexOf("|") > 0) { // if there are multiple matches for a column (ie. there's a pipe), add to sqlQuery using the IN operator
+            sqlQuery += queryArrayV2[x][0] + " IN ('" + queryArrayV2[x][1].replace(/%20/gi, ' ').replace(/\|/gi, "', '") + "')"; // replace %20 and then swap out the pipes
+        } else { // else, use a standard "=" match
+            sqlQuery += queryArrayV2[x][0] + " = '" + queryArrayV2[x][1].replace(/%20/gi, ' ') + "'"; // create the match text. replace %20 w/ a real space.
+        }
+        if (x != (queryArrayV2.length-1)) { // if this isn't the last entry in the array
+            sqlQuery = sqlQuery + " AND "; // slap the "AND" in there
+        }
+    }
+    console.log("sqlQuery ::: " + sqlQuery);
     // ^^ actually I've probably made this more complicated than it needs to be.
     // could probably just do a find/replace of all "&" with a sql AND, 
     // and replace all pipes with a sql OR
     // TODO: need to think about this more
+
+    var testString = "this%20has%20spaces";
+    console.log({testString});
+    var newTestString = testString.replace(/%20/gi, ' ');
+    console.log({newTestString});
+
 
 </script>
 

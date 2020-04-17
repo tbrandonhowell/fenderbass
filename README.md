@@ -15,3 +15,7 @@ then could build the SQL query dynamically based on looping through the array
 scenario 2: multiple matches for each column
 
 /api?column1=value|value2|value3|value4&column17=value%with%space
+
+
+SELECT * FROM fender_basses_db.basses WHERE gen_type IN ("Jazz", "Performer");
+^^ how to chain "OR" statements
