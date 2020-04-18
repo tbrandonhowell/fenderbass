@@ -7,6 +7,8 @@ const connection = require("../config/connection.js"); // Import MySQL connectio
 // CREATE THE ORM OBJECT
 // ==================================================
 const orm = { // create the ORM object, which will hold prototypical SQL queries to be reused elsewhere
+    // all: - gets everything from the database
+    // likely need to kill this one. should never be a scenario where we query everything from the database
     all: function(table, cb) {
         const queryString = "select * from " + table + ";";
         console.log("queryString: ",queryString);
@@ -18,8 +20,21 @@ const orm = { // create the ORM object, which will hold prototypical SQL queries
             // TODO: ^^ how does this callback actually work? it's passed as an argument to the function. or is the last argument to a function always a callback?
         });
     },
+    // allWhere: - used for querying all results for a single match of single column
     allWhere: function(table, column, match, cb) { // our function for grabbing the uneaten burgers from the DB (aka "select * from {table} where {column} = {value}")
         const queryString = "select * from " + table + " where " + column + " = \"" + match + "\";"; // build out the SQL query based on the function argument values
+        console.log("queryString: ",queryString);
+        connection.query(queryString, function(err,result) { // use the query method on the connection object we imported to query the DB
+            if (err) {
+                throw err;
+            }
+            cb(result); // return the result of the connection
+        });
+        // TODO: These inputs need to be sanitized
+    }, 
+    // allWhereAPI: - used for querying DB with single or multiple matches to any number of columns
+    allWhereAPI: function(table, incomingQueryString, cb) { // our function for grabbing the uneaten burgers from the DB (aka "select * from {table} where {column} = {value}")
+        const queryString = "select * from " + table + " where " + incomingQueryString + ";"; // build out the SQL query based on the function argument values
         console.log("queryString: ",queryString);
         connection.query(queryString, function(err,result) { // use the query method on the connection object we imported to query the DB
             if (err) {

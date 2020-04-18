@@ -31,6 +31,11 @@ bassModels = { // creating a new object containing more specific functions for t
         orm.allWhere("basses",incomingColumn,incomingMatch,function(res){
             cb(res);
         });
+    },
+    apiV2: function(incomingQueryString,cb) {
+        orm.allWhereAPI("basses",incomingQueryString,function(res){
+            cb(res);
+        });
     }
     // allWhereFresh: function(cb) { // create a more specific 'allWhere' function to get the uneaten burgers
     //     orm.allWhere("burgers", "devoured", false, function(res){ // use the 'allWhere' query template from the ORM

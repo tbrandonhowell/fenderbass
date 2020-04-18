@@ -119,7 +119,7 @@
             var requestURL = "/api/all"; // TODO: should probably kill this in production
         } else {
             console.log("request is for search/match API");
-            var requestURL = "/api/" + searchColumn + "/" + searchMatch;
+            var requestURL = "api/basses/" + searchColumn + "=" + searchMatch;
         }
         console.log("requestURL = " + requestURL);
         //$("#bassTable").empty();

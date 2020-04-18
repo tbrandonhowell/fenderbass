@@ -19,3 +19,14 @@ scenario 2: multiple matches for each column
 
 SELECT * FROM fender_basses_db.basses WHERE gen_type IN ("Jazz", "Performer");
 ^^ how to chain "OR" statements
+
+
+Do I have a "nickname" field? (aka Boxer bass, duff mckagan ~ jazz bass special, boner bass)
+
+This is the final query structure we're going to use for the API:
+http://localhost:3000/api-logic?gen_brand=Fender&gen_country=Japan|USA&gen_model=Boxer%20Bass|Performer%20Bass|Precision%20Bass
+
+
+test API calls:
+http://localhost:3000/api/basses/gen_model=Precision Bass&gen_country=USA|Japan
+http://localhost:3000/api/basses/gen_model=Precision Bass|Boxer Bass&gen_country=USA|Japan

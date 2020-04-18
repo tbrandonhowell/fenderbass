@@ -38,7 +38,6 @@
     console.log(queryArrayV2);
     // build the full query from the queryArrayV2
     var sqlQuery = "WHERE "; // start it out
-    var sky = "gray"
     for (x=0; x<queryArrayV2.length; x++) { // loop through the array
         if (queryArrayV2[x][1].indexOf("|") > 0) { // if there are multiple matches for a column (ie. there's a pipe), add to sqlQuery using the IN operator
             sqlQuery += queryArrayV2[x][0] + " IN ('" + queryArrayV2[x][1].replace(/%20/gi, ' ').replace(/\|/gi, "', '") + "')"; // replace %20 and then swap out the pipes
