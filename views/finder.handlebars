@@ -5,12 +5,58 @@
         </div>
         <div class="col-md-12">
             <h1>Bass Finder</h1>
+            <div id="select0">
+                <h2 >Brand - Select:</h2>
+                <button class="nextButton">Next</button>
+            </div>
+            <div id="bassesMatchingDiv">
+                <p>Basses matching these criteria: <span id="bassesMatching"></span></p>
+            </div>
+            <div id="select1" style="display: none">
+                <h2>Country of Origin - Select:</h2>
+                <button class="nextButton">Next</button>
+            </div>
+            <div id="select2" style="display: none">
+                <h2>Body Style - Select:</h2>
+                <button class="nextButton">Next</button>
+            </div>
+            <div id="select3" style="display: none">
+                <h2>Hardware - Select:</h2>
+                <button class="nextButton">Next</button>
+            </div>
         </div>
     </div>
 </div>
 
 
 <script>
+
+    // go ahead and ping the database, and update the # of available basses
+    // this should likely be replaced with a seperate, simpler API call at some point
+    // but this will work for now since the DB is tiny
+    $.get("/api/all").then(function(response) {
+        console.log("ajax request triggered");
+        console.log("ajax result:");
+        console.log(response);
+        var tableBasses = response.basses;
+        console.log(tableBasses);
+        var bassesMatching = response.basses.length;
+        console.log({bassesMatching});
+        $("#bassesMatching").text(bassesMatching);
+    });
+
+    // we'll always start @ step zero, aka first selection options
+    var currentStep = 0;
+
+    $(".nextButton").on("click", function(event){
+        console.log("nextButton click captured");
+        currentStep++;
+        console.log({currentStep});
+        // select1
+        var visibilityTarget = "#select" + currentStep;
+        console.log({visibilityTarget});
+        $(visibilityTarget).attr("style", "display: block");
+    });
 
     $(".dynamic").on("click", function(event){ // capture the click on any of the devour buttons
         console.log("caught the click");
@@ -53,39 +99,6 @@
             // newTable = newTable + "</table>";
 
         });
-    });
-
-
-    $(".devour").on("click", function(event){ // capture the click on any of the devour buttons
-        const updateID = $(this).attr("id"); // grab the ID for use in the sql query
-        console.log("updateID = " + updateID);
-        // we're actually skipping this step, since all we need to do it send the ID over in the post (and we're doing that via the URL)
-        // const devourData = { // create an object of fields that will be fed into our ajax PUT request
-        //    devoured: true // in this case we're just sending over the 'devoured' flag in the body
-        // };
-        $.ajax("/" + updateID, { // do an ajax call
-            type: "PUT", // use the PUT method
-            // data: devourData // would normally send this if we needed to send anything more than the ID for record. But we're handling that via the PUT URL
-        }).then( () => {
-            // TODO: don't we need some sort of error checking here?
-            console.log("changed devoured status to true"); // this is kind of an assumption
-            location.reload(); // reload the page
-        });
-    });
-
-    $("#newBurgerButton").on("click", function(event){
-        const newBurger = $("#newBurger").val().trim();
-        console.log("newBurger = ", newBurger);
-        const newBurgerData = {
-            burger_name: newBurger
-        };
-        $.ajax("/", {
-            type: "POST",
-            data: newBurgerData,
-        }).then( () => {
-            console.log("created a new burger");
-            location.reload();
-        })
     });
 
 </script>
